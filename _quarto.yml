@@ -1,15 +1,17 @@
 project:
   type: website
+  output-dir: docs
+
+
 
 website:
-  title: "SpencerJHowe.github.io"
+  title: "Family Search Senior Project"
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
-      - icon: twitter
-        href: https://twitter.com
+        href: https://github.com/SpencerJHowe
+
 format:
   html:
     theme: cosmo
