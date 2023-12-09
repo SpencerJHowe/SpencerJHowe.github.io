@@ -1,0 +1,85 @@
+---
+title: "Silhouette Method"
+author: "Spencer Howe"
+date: "2023-11-12"
+categories: [news, code, analysis]
+image: "image.png"
+---
+### Understanding Clustering Quality with the Silhouette Method
+
+As mentioned in my previous post, my senior project is to use clustering as a method to detect outiers in a dataframe. This time I will be talking about a different method used in clustering to help determine the correct amount of groups to make. This method is called the silhouette method.
+
+
+### The Silhouette Method: An Overview
+The silhouette method evaluates the cohesion and separation of clusters, helping us understand how well-defined and distinct the clusters are. It assigns a silhouette score to each data point, reflecting its similarity to its own cluster compared to the nearest neighboring cluster.
+
+### How to Calculate the Silhouette Score
+
+1.	Cluster the data:
+First partition your data using k-means clustering that we used previously
+
+```python
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
+
+# Assuming 'data' is your dataset
+k_values = range(2, 10)
+silhouette_scores = []
+
+for k in k_values:
+    kmeans = KMeans(n_clusters=k)
+    labels = kmeans.fit_predict(data)
+    silhouette_avg = silhouette_score(data, labels)
+    silhouette_scores.append(silhouette_avg)
+```
+2.	Calculate Silhouette Score with the following fuction:
+
+
+```python
+from sklearn.metrics import silhouette_samples
+silhouette_values = silhouette_samples(data, labels)
+
+```
+
+
+
+3.	Evaluate the Results:
+
+
+
+``` python
+average_silhouette = np.mean(silhouette_values)
+
+
+```
+
+4.	Choose the optimal value:
+The optimal value is the one that maximizes the silhouette score for your specific data base. If this value is at the edge of the tested value range set earlier, increase your range to make sure you don't need a higher number of clusters
+
+``` python
+
+optimal_k = k_values[np.argmax(silhouette_scores)]
+
+
+```
+5. Visualize the scores:
+This code creates a plot that should show you where the scores peak
+
+```python
+import matplotlib.pyplot as plt
+
+plt.plot(k_values, silhouette_scores, marker='o')
+plt.xlabel('Number of Clusters (k)')
+plt.ylabel('Average Silhouette Score')
+plt.title('Silhouette Method for Optimal Clusters')
+plt.show()
+
+```
+
+![](silhouette.png)
+
+The result may look something like this in which you would pick 2 as the amount of clusters you want to create
+
+
+### Conclusion
+The silhouette method serves as a valuable tool for assessing the quality of clustering in a dataset. By leveraging silhouette scores and visualizations, we can make informed decisions about the number of clusters, ultimately enhancing the performance and interpretability of our clustering models. A large drawback to this method though is that it is very computationally expensive and takes a long time to run on larger datasets

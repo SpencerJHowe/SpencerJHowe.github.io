@@ -2,7 +2,9 @@
   {
     "listing": "/index.html",
     "items": [
-      "/posts/post-with-code/index.html",
+      "/posts/3rd Post - Agglomerative Clustering/index.html",
+      "/posts/2nd Post - Silhouette Method/index.html",
+      "/posts/1st Post- K-means Clustering/index.html",
       "/posts/welcome/index.html"
     ]
   }

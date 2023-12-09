@@ -1,0 +1,44 @@
+---
+title: "Divisive Clustering"
+author: "Spencer Howe"
+date: "2023-11-30"
+categories: [news, code, analysis]
+image: "image.png"
+---
+### Understanding Patterns in Data with Divisive Clustering
+
+In this post, I'll be looking at divisive clustering not only as a way to detect outliers in the data but also as a method of data analysis and exploration that could be applied to any dataset to help find patterns and increase understanding of a dataset
+
+
+### Divisive Clustering: How it Works
+First, you start with a single cluster encompassing all data points. Then you split clusters based on dissimilarity until each data point forms a singleton cluster. That's the whole process! We'll see how this looks and understand it's usefulness with some example data.
+
+
+### Code Implementation
+
+``` python
+from sklearn.datasets import make_blobs
+from scipy.cluster.hierarchy import dendrogram, linkage
+import matplotlib.pyplot as plt
+
+# Generate sample data
+X, _ = make_blobs(n_samples=300, centers=4, random_state=42)
+
+# Perform divisive hierarchical clustering
+Z = linkage(X, method='ward')
+dendrogram(Z, orientation='top')
+plt.title('Divisive Hierarchical Clustering Dendrogram')
+plt.show()
+
+
+```
+In the above code, we load in some example data and then perform divisive clustering on it. The below picture is the ouput.
+
+
+![](Divisive Clustering.png)
+
+### Interpreting Results
+In the above picture we can clearly see that when we perform divisive clustering on the data, their appears to be 4 almost identically sized groups that form immediately and then those 4 groups break divide in about the same way. Based of this chart, we would want to run a clustering algorithm with 4 clusters as our default, as these were the first biggest groups made by our divisive clustering algorithm. A cluster grouping with 4 groups for this data would give us the most meaningful information based off those clusters.
+
+### Conclusion 
+Divisive hierarchical clustering offers a unique perspective on clustering by employing a top-down approach. Understanding the principles, interpreting dendrograms, and defining appropriate stopping criteria are key to unlocking the potential of this method. Drawbacks to this method however are that it is also very computationally expensive to the point where running it on a large enough dataset would cause a normal computer to crash. However, if working with smaller datasets, it could be a very useful method in seeing how this model groups or clusters your data as it can give insight into how many clusters are appropiate for your dataset.
